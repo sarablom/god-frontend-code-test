@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { Car } from "../models/car";
 
 const fetcher = (resource: string) => fetch(resource).then(res => res.json());
 
@@ -6,7 +7,7 @@ export function useGetCars() {
     const { data, error } = useSWR(`/api/cars.json`, fetcher);
 
     return {
-        cars: data,
+        cars: data as Car[],
         isLoading: !error && !data,
         isError: error,
     };
