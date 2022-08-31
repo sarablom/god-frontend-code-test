@@ -3,51 +3,24 @@ import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { DisplayElectricCars } from "../src/components/DisplayElectricCars";
 import electricCars from "../public/api/cars.json";
+import useSWR from "swr";
 import { Car } from "../src/models/car";
+import { useGetCars } from "../src/hooks/useGetCars";
 
-const HomePage: NextPage = ({ cars }: any) => {
-    const [carsToDisplay, setCarsToDisplay] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
+const HomePage: NextPage = () => {
+    const { cars, isLoading, isError } = useGetCars();
 
-    useEffect(() => {
-        if (cars && cars.length > 0) {
-            setCarsToDisplay(cars);
-            setIsLoading(false);
-            setIsError(false);
-        } else {
-            setIsError(true);
-            setIsLoading(false);
-        }
-    }, [cars]);
-
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
-    if (isError) {
-        return <p>Error...</p>;
-    }
+    if (isLoading) return <p>Loading</p>;
+    if (isError) return <p>Error</p>;
 
     return (
         <>
             <Head>
                 <title>Volvo Electric Cars</title>
             </Head>
-
-            {carsToDisplay.length > 0 &&
-                carsToDisplay.map((car: Car) => (
-                    <div key={car.id}>{car.modelName}</div>
-                ))}
+            <DisplayElectricCars cars={cars} />
         </>
     );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-    return {
-        props: {
-            cars: electricCars,
-        },
-    };
 };
 
 export default HomePage;
