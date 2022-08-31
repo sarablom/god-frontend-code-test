@@ -1,8 +1,9 @@
-import { useState, useEffect, FC } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 import { Car } from "../models/car";
-import { Block, Button, Text, Link, useTheme } from "vcc-ui";
+import { Flex, Text, Link as VolvoLink, useTheme } from "vcc-ui";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
     cars: Car[];
@@ -11,82 +12,61 @@ interface Props {
 export const DisplayElectricCars: FC<Props> = ({ cars }) => {
     const theme = useTheme();
     return (
-        <Wrapper>
-            {cars &&
-                cars.length > 0 &&
-                cars.map((car: Car) => (
-                    <Card key={car.id}>
-                        <Text
-                            variant="bates"
-                            extend={{
-                                fontSize: ".7rem",
-                                color: "hsla(0,0%,35%,1.0)",
-                                fontWeight: "500",
-                            }}
-                        >
-                            {car.bodyType.toUpperCase()}
-                        </Text>
+        <Flex extend={{ flexDirection: "row" }}>
+            {cars.map(car => (
+                <Card key={car.id}>
+                    <Text
+                        variant="bates"
+                        extend={{
+                            fontSize: ".7rem",
+                            color: "hsla(0,0%,35%,1.0)",
+                            fontWeight: "500",
+                        }}
+                    >
+                        {car.bodyType.toUpperCase()}
+                    </Text>
 
-                        <Text variant="amundsen">{car.modelName} </Text>
+                    <Text variant="amundsen">{car.modelName} </Text>
 
-                        <Text
-                            variant="columbus"
-                            extend={{
-                                fontSize: "1rem",
-                                color: "hsla(0,0%,35%,1.0)",
-                                fontWeight: "500",
-                            }}
-                        >
-                            {car.modelType}
-                        </Text>
+                    <Text
+                        variant="columbus"
+                        extend={{
+                            fontSize: "1rem",
+                            color: "hsla(0,0%,35%,1.0)",
+                            fontWeight: "500",
+                        }}
+                    >
+                        {car.modelType}
+                    </Text>
 
-                        <img src={car.imageUrl} alt={car.modelName} />
-                        <div className="link-wrapper">
-                            <Link
-                                href="https://www.volvocars.com/"
+                    <Image
+                        src={car.imageUrl}
+                        alt={car.modelName}
+                        width="100%"
+                        height="100%"
+                        layout="responsive"
+                        objectFit="contain"
+                    />
+                    <Flex extend={{ flexDirection: "row" }}>
+                        <Link href={`/learn/${car.id}`}>
+                            <VolvoLink
                                 arrow="right"
+                                style={{ marginRight: "24px" }}
                             >
                                 Learn
-                            </Link>
-                            <Link
-                                href="https://www.volvocars.com/"
-                                arrow="right"
-                            >
-                                Shop
-                            </Link>
-                        </div>
-                    </Card>
-                ))}
-
-            <Block extend={{ padding: 20 }}>
-                <Button>Click me!</Button>
-            </Block>
-        </Wrapper>
+                            </VolvoLink>
+                        </Link>
+                        <Link href={`/shop/${car.id}`}>
+                            <VolvoLink arrow="right">Shop</VolvoLink>
+                        </Link>
+                    </Flex>
+                </Card>
+            ))}
+        </Flex>
     );
 };
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-`;
 
 const Card = styled.div`
     min-width: 350px;
     margin: 16px;
-
-    .link-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        a {
-            margin-right: 24px;
-            display: flex;
-        }
-
-        span {
-            display: flex;
-            align-items: baseline;
-        }
-    }
 `;
