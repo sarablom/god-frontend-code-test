@@ -1,47 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import { Car } from "../models/car";
+import { Block, Button, Card, CardContent, Spacer, Text } from "vcc-ui";
+import Image from "next/image";
 
-export const DisplayElectricCars = () => {
-    const [cars, setCars] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);
+interface Props {
+    cars: Car[];
+}
 
-    useEffect(() => {
-        async function runEffect() {
-            const response = await fetch("api/cars.json", {
-                headers: {
-                    "Content-Type": "application/json",
-
-                    Accept: "application/json",
-                },
-            });
-            const data = await response.json();
-
-            if (response.ok) {
-                setCars(data);
-                setIsLoading(false);
-            } else {
-                setIsError(true);
-                setIsLoading(false);
-            }
-        }
-
-        runEffect();
-    }, []);
-
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
-    if (isError) {
-        return <p>Error...</p>;
-    }
-
+export const DisplayElectricCars: FC<Props> = ({ cars }) => {
     return (
-        <ol>
-            <li>Hej</li>
+        <>
             {cars &&
                 cars.length > 0 &&
-                cars.map((car: Car) => <li key={car.id}>{car.modelName}</li>)}
-        </ol>
+                cars.map((car: Car) => (
+                    <>
+                        <Card key={car.id}>
+                            <CardContent>
+                                <Text>{car.bodyType}</Text>
+                                <Spacer />
+                                <Text>{car.modelName}</Text>
+                                <Spacer />
+                                <Text>{car.modelType}</Text>
+                                <Spacer />
+                                <img src={car.imageUrl} alt={car.modelName} />
+                            </CardContent>
+                        </Card>
+                        <Spacer />
+                    </>
+                ))}
+
+            <Block extend={{ padding: 20 }}>
+                <Button>Click me!</Button>
+            </Block>
+        </>
     );
 };
