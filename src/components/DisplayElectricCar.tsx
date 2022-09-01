@@ -1,27 +1,26 @@
 import { FC } from "react";
-import styled from "styled-components";
-import { Car } from "../models/car";
-import { Flex, Text, Link as VolvoLink, useTheme } from "vcc-ui";
+import { LinkWithRightArrow } from "./LinkWithRightArrow";
 import Image from "next/image";
-import Link from "next/link";
+import { Car } from "../models/car";
+import { Flex, Text } from "vcc-ui";
+import styled from "styled-components";
 
 interface Props {
     cars: Car[];
 }
 
-export const DisplayElectricCars: FC<Props> = ({ cars }) => {
-    const theme = useTheme();
+export const DisplayElectricCar: FC<Props> = ({ cars }) => {
     return (
         <Flex extend={{ flexDirection: "row" }}>
             {cars.map(car => (
-                <Card key={car.id}>
+                <Card key={car.id} className="carousel-item">
                     <Text
                         variant="bates"
-                        extend={{
+                        extend={({ theme }) => ({
                             fontSize: ".7rem",
-                            color: "hsla(0,0%,35%,1.0)",
+                            color: theme.color.foreground.secondary,
                             fontWeight: "500",
-                        }}
+                        })}
                     >
                         {car.bodyType.toUpperCase()}
                     </Text>
@@ -30,11 +29,11 @@ export const DisplayElectricCars: FC<Props> = ({ cars }) => {
 
                     <Text
                         variant="columbus"
-                        extend={{
+                        extend={({ theme }) => ({
                             fontSize: "1rem",
-                            color: "hsla(0,0%,35%,1.0)",
+                            color: theme.color.foreground.secondary,
                             fontWeight: "500",
-                        }}
+                        })}
                     >
                         {car.modelType}
                     </Text>
@@ -48,17 +47,14 @@ export const DisplayElectricCars: FC<Props> = ({ cars }) => {
                         objectFit="contain"
                     />
                     <Flex extend={{ flexDirection: "row" }}>
-                        <Link href={`/learn/${car.id}`}>
-                            <VolvoLink
-                                arrow="right"
-                                style={{ marginRight: "24px" }}
-                            >
-                                Learn
-                            </VolvoLink>
-                        </Link>
-                        <Link href={`/shop/${car.id}`}>
-                            <VolvoLink arrow="right">Shop</VolvoLink>
-                        </Link>
+                        <LinkWithRightArrow
+                            name="Learn"
+                            path={`/learn/${car.id}`}
+                        />
+                        <LinkWithRightArrow
+                            name="Shop"
+                            path={`/shop/${car.id}`}
+                        />
                     </Flex>
                 </Card>
             ))}
@@ -69,4 +65,6 @@ export const DisplayElectricCars: FC<Props> = ({ cars }) => {
 const Card = styled.div`
     min-width: 350px;
     margin: 16px;
+    display: inline-flex;
+    flex-direction: column;
 `;
