@@ -3,10 +3,10 @@ import { Car } from "../models/car";
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-export function useGetSingleCar(id: string) {
+export function useGetSingleCar(id: string | string[] | undefined) {
     const { data, error } = useSWR(`/api/cars.json`, fetcher);
 
-    let filteredCar
+    let filteredCar;
 
     if (data) {
         filteredCar = data.find((car: Car) => {
