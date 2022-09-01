@@ -5,7 +5,7 @@ import { Button, Spinner } from "vcc-ui";
 import Link from "next/link";
 import { useGetSingleCar } from "../../src/hooks/useGetSingleCar";
 
-const LearnPage: NextPage = () => {
+const ShopPage: NextPage = () => {
     const router = useRouter();
     const { id } = router.query;
 
@@ -18,7 +18,7 @@ const LearnPage: NextPage = () => {
             <Head>
                 <title>Volvo Electric Cars -- Learn</title>
             </Head>
-            {car && <h1>Learn more about {car.modelName}</h1>}
+            {car && <h1>Buy {car.modelName}</h1>}
             <Link href="/">
                 <Button>Back to home</Button>
             </Link>
@@ -26,4 +26,4 @@ const LearnPage: NextPage = () => {
     );
 };
 
-export default LearnPage;
+export default ShopPage;
