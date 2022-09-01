@@ -27,5 +27,5 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/CarsComp.tsx", "pages/about.js", "src/hooks/useGetCars.tsx"  ]
+, "pages/CarsComp.tsx", "pages/about.js", "src/hooks/useGetCars.tsx", "src/components/Carousel.tsx"  ]
 }
