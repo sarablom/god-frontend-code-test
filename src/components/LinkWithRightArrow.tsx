@@ -1,5 +1,4 @@
 import { FC } from "react";
-import styled from "styled-components";
 import { Flex, Link } from "vcc-ui";
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
 };
 
 export const LinkWithRightArrow: FC<Props> = ({ name, path }) => (
-    <Flex extend={{ flexDirection: "row" }}>
+    <Flex>
         <Link href={path} arrow="right" style={{ marginRight: "24px" }}>
             {name}
         </Link>
