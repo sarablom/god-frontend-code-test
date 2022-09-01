@@ -2,14 +2,6 @@ import { createGlobalStyle } from "styled-components";
 
 export const CssVariables = createGlobalStyle`
   :root {
-    // Colors
-    --color-primary: #FA7978;
-    --color-secondary: hsla(0, 0%, 35%, 1.0);
-    --color-blackish: #4B4B4B;
-    --color-whiteish: #FCFCFC;
-    --color-error: #EF5D80;
-    --color-warning: #efa35d;
-    --color-success: hsla(190, 22%, 46%, 1.0);
 
     // Font sizes
     --font-size-s: clamp(0.8rem, 0.18vw + 0.66rem, 0.9rem);
