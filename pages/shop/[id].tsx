@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { Button, Spinner } from "vcc-ui";
 import Link from "next/link";
-import { useGetSingleCar } from "../../src/hooks/useGetSingleCar";
+import { useGetSingleCar } from "../../src/hooks/useGetCar";
 
 const ShopPage: NextPage = () => {
     const router = useRouter();
