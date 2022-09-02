@@ -5,7 +5,7 @@ import { Car } from "../models/car";
 interface Props {
     cars: Car[];
     filteredCars: Car[];
-    setFilteredCars: ([]) => Car[];
+    setFilteredCars: (cars: Car[]) => void;
 }
 
 export const FilterSearchBar: FC<Props> = ({
@@ -30,7 +30,7 @@ export const FilterSearchBar: FC<Props> = ({
         <form>
             <TextInput
                 value={value}
-                label="Filter by car type"
+                label="Filter by car body type"
                 type="text"
                 placeholder="SUV, Estate, Sedan"
                 onChange={e => {

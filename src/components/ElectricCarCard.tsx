@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Car } from "../models/car";
 import { Flex, Text } from "vcc-ui";
 import styled from "styled-components";
-import { Carousel } from "./Carousel";
 import { Breakpoints } from "../styles/BreakPoints";
 
 interface Props {
