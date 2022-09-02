@@ -2,18 +2,38 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { ElectricCarCard } from "../src/components/ElectricCarCard";
 import { useGetCars } from "../src/hooks/useGetCar";
-import { Spinner } from "vcc-ui";
+import { Spinner, Text } from "vcc-ui";
 import styled from "styled-components";
 import { FilterSearchBar } from "../src/components/FIlterSearchBar";
 import { Carousel } from "../src/components/Carousel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Car } from "../src/models/car";
+import { AlertMessage } from "../src/components/AlertMessage";
 
 const HomePage: NextPage = () => {
-    const { cars, isLoading, isError } = useGetCars();
-    const [filteredCars, setFilteredCars] = useState(cars);
+    const { cars, isLoading, error } = useGetCars();
+    const [filteredCars, setFilteredCars] = useState<Car[] | []>([]);
+
+    useEffect(() => {
+        if (cars) setFilteredCars(cars);
+    }, [cars]);
 
     if (isLoading) return <Spinner size={32} />;
-    if (isError) return <p>Error</p>;
+    if (error)
+        return (
+            <AlertMessage isVisible>
+                <Text
+                    variant="columbus"
+                    extend={() => ({
+                        fontWeight: "500",
+                    })}
+                >
+                    Oh no, something went wrong and we cannot access the
+                    Electric Cars right now. Please try again later or try
+                    reloading the page.
+                </Text>
+            </AlertMessage>
+        );
 
     return (
         <PageWrapper>
@@ -30,6 +50,18 @@ const HomePage: NextPage = () => {
                     <ElectricCarCard key={car.id} car={car} />
                 ))}
             </Carousel>
+            {filteredCars.length === 0 && (
+                <Text
+                    variant="columbus"
+                    extend={({ theme }) => ({
+                        fontSize: "1rem",
+                        color: theme.color.foreground.secondary,
+                        fontWeight: "500",
+                    })}
+                >
+                    Sorry, we couldn&apos;t find a car with that body type
+                </Text>
+            )}
         </PageWrapper>
     );
 };
