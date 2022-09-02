@@ -7,7 +7,13 @@ type Props = {
 };
 
 export const LinkWithRightArrow: FC<Props> = ({ name, path }) => (
-    <Flex>
+    <Flex
+        extend={{
+            flexDirection: "row",
+            alignItems: "center",
+            justityContent: "center",
+        }}
+    >
         <Link href={path} arrow="right" style={{ marginRight: "24px" }}>
             {name}
         </Link>
