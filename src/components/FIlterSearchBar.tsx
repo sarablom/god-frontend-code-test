@@ -5,22 +5,25 @@ import { Car } from "../models/car";
 interface Props {
     cars: Car[];
     filteredCars: Car[];
-    setFilteredCars: Function;
+    setFilteredCars: ([]) => Car[];
 }
 
-export const FilterSearchBar: FC<Props> = ({ cars, filteredCars, setFilteredCars }) => {
+export const FilterSearchBar: FC<Props> = ({
+    cars,
+    filteredCars,
+    setFilteredCars,
+}) => {
     const [value, setValue] = useState("");
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setValue(e.target.value);
 
-        const filterCars = cars.filter(car => {
+        const filteredByBodyType = cars.filter(car => {
             return car.bodyType.includes(e.target.value);
         });
 
-        setFilteredCars(filterCars);
-        console.log({ filterCars });
+        setFilteredCars(filteredByBodyType);
     };
 
     return (

@@ -4,7 +4,7 @@ import { ScreenReaderText } from "./ScreenReaderText";
 
 interface Props {
     index: number;
-    updateIndex: Function;
+    updateIndex: (index: number) => void;
 }
 
 export const IndicatorButtons: FC<Props> = ({ index, updateIndex }) => {
