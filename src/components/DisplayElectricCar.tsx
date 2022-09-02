@@ -30,7 +30,9 @@ export const DisplayElectricCar: FC<Props> = ({ cars }) => {
                         extend={{ flexDirection: "row" }}
                         className="text-warp"
                     >
-                        <Text variant="amundsen">{car.modelName}</Text>
+                        <Text variant="amundsen"extend={() => ({
+                                marginRight: "8px",
+                            })}>{car.modelName}</Text>
 
                         <Text
                             variant="columbus"
@@ -38,7 +40,6 @@ export const DisplayElectricCar: FC<Props> = ({ cars }) => {
                                 fontSize: "1rem",
                                 color: theme.color.foreground.secondary,
                                 fontWeight: "500",
-                                marginLeft: "8px",
                             })}
                         >
                             {car.modelType}
@@ -79,7 +80,7 @@ export const DisplayElectricCar: FC<Props> = ({ cars }) => {
 const Card = styled.div`
     width: 80%;
     padding: 16px;
-    display: inline-flex;
+    display: inline-block;
     flex-direction: column;
     scroll-snap-align: center;
 

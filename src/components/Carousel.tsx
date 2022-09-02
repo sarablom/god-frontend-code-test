@@ -22,17 +22,20 @@ interface Props {
 
 export const Carousel: FC<Props> = ({ children }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [fillFirstIndicator, setFillFirstIndicator] = useState(true);
 
     const updateIndex = (newIndex: number) => {
         if (newIndex < 0) {
             newIndex = 0;
         } else if (newIndex >= Children.count(children)) {
             newIndex = Children.count(children) - 1;
+            setFillFirstIndicator(false);
         }
 
         setActiveIndex(newIndex);
     };
 
+    // TODO: Update UI indicators when swiping
     const handlers = useSwipeable({
         onSwipedLeft: () => updateIndex(activeIndex + 1),
         onSwipedRight: () => updateIndex(activeIndex - 1),
@@ -48,7 +51,7 @@ export const Carousel: FC<Props> = ({ children }) => {
                     return cloneElement(child, { width: "100%" });
                 })}
             </InnerChild>
-            <Indicators>
+            <Indicators fillFirstIndicator={fillFirstIndicator}>
                 <Flex
                     extend={{ flexDirection: "row", alignItems: "flex-end" }}
                     className="previous-and-next-button"
@@ -85,6 +88,10 @@ export const Carousel: FC<Props> = ({ children }) => {
     );
 };
 
+interface ButtonProps {
+    fillFirstIndicator?: boolean;
+}
+
 const CarouselWrapper = styled.div`
     overflow: hidden;
     display: flex;
@@ -97,10 +104,15 @@ const InnerChild = styled.div`
     scroll-snap-type: x mandatory;
 `;
 
-const Indicators = styled.div`
+const Indicators = styled.div<ButtonProps>`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:first-child {
+        background: ${props =>
+            props.fillFirstIndicator ? "#141414" : "#d5d5d5"};
+    }
 
     .indicator-buttons {
         height: 16px;
@@ -109,7 +121,7 @@ const Indicators = styled.div`
         margin: 8px;
         border-radius: 50%;
         border: none;
-        color: #fafafa;
+        background: #d5d5d5;
 
         &:active,
         &:focus {
