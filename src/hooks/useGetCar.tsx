@@ -1,23 +1,23 @@
 import useSWR from "swr";
 import { Car } from "../models/car";
 
-interface ReturnDataGetCars {
+interface CarsData {
     cars: Car[];
     isLoading: boolean;
-    isError: boolean;
+    error: {} | undefined;
 }
 
-interface ReturnDataGetSingleCar {
+interface SingleCarData {
     car: Car;
     isLoading: boolean;
-    isError: boolean;
+    error: {} | undefined;
 }
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-export function useGetSingleCar(
+export const useGetSingleCar = (
     id: string | string[] | undefined
-): ReturnDataGetSingleCar {
+): SingleCarData => {
     const { data, error } = useSWR(`/api/cars.json`, fetcher);
 
     let filteredCar;
@@ -29,18 +29,18 @@ export function useGetSingleCar(
     }
 
     return {
-        car: filteredCar as Car,
+        car: filteredCar,
         isLoading: !error && !data,
-        isError: error,
+        error,
     };
-}
+};
 
-export function useGetCars(): ReturnDataGetCars {
+export const useGetCars = (): CarsData => {
     const { data, error } = useSWR(`/api/cars.json`, fetcher);
 
     return {
         cars: data,
         isLoading: !error && !data,
-        isError: error,
+        error,
     };
-}
+};
