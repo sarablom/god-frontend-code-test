@@ -69,8 +69,8 @@ export const ElectricCarCard: FC<Props> = ({ car }) => {
 };
 
 const Card = styled.div`
-    width: 80%;
-    padding: 16px;
+    width: 350px;
+    padding: 16px 16px 16px 0;
     display: inline-block;
     flex-direction: column;
     scroll-snap-align: center;
