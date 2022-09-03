@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useTheme } from "vcc-ui";
+import { CurrentTheme, useTheme } from "vcc-ui";
 import styled from "styled-components";
 
 type Props = {
@@ -31,7 +31,7 @@ export const AlertMessage: FC<Props> = ({ children, isVisible, isSuccess }) => {
 };
 
 interface MessageProps {
-    theme: any;
+    theme: CurrentTheme;
 }
 
 const MessageContainer = styled.div`
