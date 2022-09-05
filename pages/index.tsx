@@ -40,12 +40,8 @@ const HomePage: NextPage = () => {
             <Head>
                 <title>Volvo Electric Cars</title>
             </Head>
-            <FilterSearchBar
-                cars={cars}
-                filteredCars={filteredCars}
-                setFilteredCars={setFilteredCars}
-            />
-            <Carousel>
+            <FilterSearchBar cars={cars} setFilteredCars={setFilteredCars} />
+            <Carousel widthOfChildren={366}>
                 {filteredCars.map(car => (
                     <ElectricCarCard key={car.id} car={car} />
                 ))}
@@ -57,6 +53,7 @@ const HomePage: NextPage = () => {
                         fontSize: "1rem",
                         color: theme.color.foreground.secondary,
                         fontWeight: "500",
+                        marginTop: "2rem",
                     })}
                 >
                     Sorry, we couldn&apos;t find a car with that body type

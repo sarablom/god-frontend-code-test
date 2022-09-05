@@ -3,26 +3,30 @@ import {
     ReactNode,
     useState,
     cloneElement,
-    Children,
-    ReactChild,
-    ReactElement,
+    Children
 } from "react";
 import { useSwipeable } from "react-swipeable";
 import styled from "styled-components";
 import { IndicatorButtons } from "./IndicatorButtons";
 import { ScreenReaderText } from "./ScreenReaderText";
 import { Breakpoints } from "../styles/BreakPoints";
-import { CurrentTheme, Flex, Icon, useTheme } from "vcc-ui";
+import { Flex, Icon } from "vcc-ui";
 
 interface Props {
     children: ReactNode;
+    widthOfChildren: number;
 }
 
 //Hughly inspired by TinySo https://medium.com/tinyso/how-to-create-the-responsive-and-swipeable-carousel-slider-component-in-react-99f433364aa0
 
-export const Carousel: FC<Props> = ({ children }) => {
+/**
+ * @description A carousel component. Wrap your components in this carousel and they will be swipeable horizontally. The component holds separate UI for mobile and tablet and up
+ * @param children - a node of react children to render inside the component
+ * @param widthOfChildren - a number that calculates how far each slide should transform sideways when user clicks next/swipes. This number should include the childrens width including margin.
+ */
+
+export const Carousel: FC<Props> = ({ children, widthOfChildren }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const theme = useTheme();
 
     const updateIndex = (newIndex: number) => {
         if (newIndex < 0) {
@@ -34,30 +38,33 @@ export const Carousel: FC<Props> = ({ children }) => {
         setActiveIndex(newIndex);
     };
 
-    const handlers = useSwipeable({
+    const swipeHandlers = useSwipeable({
         onSwipedLeft: () => updateIndex(activeIndex + 1),
         onSwipedRight: () => updateIndex(activeIndex - 1),
     });
 
     return (
-        <CarouselWrapper {...handlers} className="carousel">
+        <CarouselWrapper {...swipeHandlers} className="carousel">
             <InnerChild
-                style={{ transform: `translateX(-${activeIndex * 366}px)` }}
+                style={{
+                    transform: `translateX(-${activeIndex * widthOfChildren}px)`,
+                }}
             >
                 {Children.map(children, (child: any, index) => {
-                    return cloneElement(child, { width: "366px" });
+                    return cloneElement(child, { width: `${widthOfChildren}px` });
                 })}
             </InnerChild>
-            <Indicators activeIndex={activeIndex + 1} theme={theme}>
+            <IndicatorsWrapper>
                 {Children.map(children, (_, index) => {
                     return (
                         <IndicatorButtons
                             index={index}
                             updateIndex={updateIndex}
+                            activeIndex={activeIndex}
                         />
                     );
                 })}
-            </Indicators>
+            </IndicatorsWrapper>
             <Flex
                 extend={{ flexDirection: "row", alignItems: "flex-end" }}
                 className="previous-and-next-button"
@@ -84,11 +91,6 @@ export const Carousel: FC<Props> = ({ children }) => {
         </CarouselWrapper>
     );
 };
-
-interface ButtonProps {
-    activeIndex: number;
-    theme: CurrentTheme;
-}
 
 const CarouselWrapper = styled.div`
     overflow: hidden;
@@ -119,29 +121,8 @@ const InnerChild = styled.div`
     scroll-snap-type: x mandatory;
 `;
 
-const Indicators = styled.div<ButtonProps>`
+const IndicatorsWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
-    .indicator-buttons {
-        height: 16px;
-        width: 16px;
-        cursor: pointer;
-        margin: 8px;
-        border-radius: 50%;
-        border: none;
-
-        &:nth-of-type(${props => props.activeIndex}) {
-            background: ${props => props.theme.color.foreground.primary};
-        }
-
-        &:not(:nth-of-type(${props => props.activeIndex})) {
-            background: ${props => props.theme.color.ornament.border};
-        }
-
-        @media screen and (min-width: ${Breakpoints.TabletPortrait}) {
-            display: none;
-        }
-    }
 `;

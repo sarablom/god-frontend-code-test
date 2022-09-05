@@ -10,6 +10,11 @@ interface Props {
     car: Car;
 }
 
+/**
+ * @description A component which dispalys a styled car card
+ * @param car - An object of type Car
+ */
+
 export const ElectricCarCard: FC<Props> = ({ car }) => {
     return (
         <Card  className="carousel-item">

@@ -4,15 +4,16 @@ import { Car } from "../models/car";
 
 interface Props {
     cars: Car[];
-    filteredCars: Car[];
     setFilteredCars: (cars: Car[]) => void;
 }
 
-export const FilterSearchBar: FC<Props> = ({
-    cars,
-    filteredCars,
-    setFilteredCars,
-}) => {
+/**
+ * @description A component which filters an array of Cars to show only the users choice of body type
+ * @param car - An array containing objects of type Car. This contains the complete set of cars.
+ * @param setFilteredCars - A function to set the new filterdCars array depending on users search words.
+ */
+
+export const FilterSearchBar: FC<Props> = ({ cars, setFilteredCars }) => {
     const [value, setValue] = useState("");
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

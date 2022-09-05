@@ -4,15 +4,15 @@ import styled from "styled-components";
 
 type Props = {
     children: React.ReactNode;
-    isVisible?: boolean;
+    isVisible: boolean;
     isSuccess?: boolean;
 };
 
 /**
  * @description An alert message component
  * @param children - a node of react children to render inside the component
- * @param isVisible - a boolean that indicates if the message should be visible in the DOM
- * @param isSuccess - a boolean that indicates if the message should be styled as a success message
+ * @param isVisible - a boolean that indicates if the message should be visible in the DOM. If you don´t add a visible state, the component will never show, therefor it is not optional
+ * @param isSuccess - an optional boolean that indicates if the message should be styled as a success message. The default styling is an error message
  */
 
 export const AlertMessage: FC<Props> = ({ children, isVisible, isSuccess }) => {
