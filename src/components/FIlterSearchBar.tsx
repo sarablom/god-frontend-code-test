@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { TextInput } from "vcc-ui";
 import { Car } from "../models/car";
+import styled from "styled-components";
 
 interface Props {
     cars: Car[];
@@ -28,7 +29,7 @@ export const FilterSearchBar: FC<Props> = ({ cars, setFilteredCars }) => {
     };
 
     return (
-        <form>
+        <FormWrapper>
             <TextInput
                 value={value}
                 label="Filter by car body type"
@@ -38,6 +39,10 @@ export const FilterSearchBar: FC<Props> = ({ cars, setFilteredCars }) => {
                     onChangeHandler(e);
                 }}
             />
-        </form>
+        </FormWrapper>
     );
 };
+
+const FormWrapper = styled.form`
+    max-width: max(50vw, 500px);
+`;
