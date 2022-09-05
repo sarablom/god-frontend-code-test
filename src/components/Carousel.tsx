@@ -1,10 +1,4 @@
-import {
-    FC,
-    ReactNode,
-    useState,
-    cloneElement,
-    Children
-} from "react";
+import { FC, ReactNode, useState, cloneElement, Children } from "react";
 import { useSwipeable } from "react-swipeable";
 import styled from "styled-components";
 import { IndicatorButtons } from "./IndicatorButtons";
@@ -17,7 +11,7 @@ interface Props {
     widthOfChildren: number;
 }
 
-//Hughly inspired by TinySo https://medium.com/tinyso/how-to-create-the-responsive-and-swipeable-carousel-slider-component-in-react-99f433364aa0
+// Hugely inspired by TinySo https://medium.com/tinyso/how-to-create-the-responsive-and-swipeable-carousel-slider-component-in-react-99f433364aa0
 
 /**
  * @description A carousel component. Wrap your components in this carousel and they will be swipeable horizontally. The component holds separate UI for mobile and tablet and up
@@ -29,10 +23,12 @@ export const Carousel: FC<Props> = ({ children, widthOfChildren }) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const updateIndex = (newIndex: number) => {
-        if (newIndex < 0) {
+        const childrenCount = Children.count(children);
+
+        if (newIndex >= childrenCount) {
+            newIndex = childrenCount - 1;
+        } else if (newIndex < 0) {
             newIndex = 0;
-        } else if (newIndex >= Children.count(children)) {
-            newIndex = Children.count(children) - 1;
         }
 
         setActiveIndex(newIndex);
@@ -47,11 +43,15 @@ export const Carousel: FC<Props> = ({ children, widthOfChildren }) => {
         <CarouselWrapper {...swipeHandlers} className="carousel">
             <InnerChild
                 style={{
-                    transform: `translateX(-${activeIndex * widthOfChildren}px)`,
+                    transform: `translateX(-${
+                        activeIndex * widthOfChildren
+                    }px)`,
                 }}
             >
-                {Children.map(children, (child: any, index) => {
-                    return cloneElement(child, { width: `${widthOfChildren}px` });
+                {Children.map(children, (child: any) => {
+                    return cloneElement(child, {
+                        width: `${widthOfChildren}px`,
+                    });
                 })}
             </InnerChild>
             <IndicatorsWrapper>
