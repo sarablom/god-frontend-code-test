@@ -4,8 +4,7 @@ import { Car } from "../models/car";
 interface CarsData {
     cars: Car[];
     isLoading: boolean;
-    error:
-        | {
+    error: {
               message: string;
           }
         | undefined;
@@ -14,8 +13,7 @@ interface CarsData {
 interface SingleCarData {
     car: Car;
     isLoading: boolean;
-    error:
-        | {
+    error: {
               message: string;
           }
         | undefined;
