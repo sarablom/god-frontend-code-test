@@ -21,18 +21,9 @@ const HomePage: NextPage = () => {
     if (isLoading) return <Spinner size={32} />;
     if (error)
         return (
-            <AlertMessage isVisible>
-                <Text
-                    variant="columbus"
-                    extend={() => ({
-                        fontWeight: "500",
-                    })}
-                >
-                    Oh no, something went wrong and we cannot access the
-                    Electric Cars right now. Please try again later or try
-                    reloading the page.
-                </Text>
-            </AlertMessage>
+            <AlertMessage isVisible message="Oh no, something went wrong and we cannot access the
+            Electric Cars right now. Please try again later or try
+            reloading the page." />
         );
 
     return (
