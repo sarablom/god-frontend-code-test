@@ -18,7 +18,6 @@ export const FilterSearchBar: FC<Props> = ({ cars, setFilteredCars }) => {
     const [value, setValue] = useState("");
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
         setValue(e.target.value);
 
         const filteredByBodyType = cars.filter(car => {
@@ -35,9 +34,7 @@ export const FilterSearchBar: FC<Props> = ({ cars, setFilteredCars }) => {
                 label="Filter by car body type"
                 type="text"
                 placeholder="SUV, Estate, Sedan"
-                onChange={e => {
-                    onChangeHandler(e);
-                }}
+                onChange={onChangeHandler}
             />
         </FormWrapper>
     );

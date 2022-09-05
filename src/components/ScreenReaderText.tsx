@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
  * @param text The text to be displayed
  */
 
-export const ScreenReaderText: React.FC<Props> = ({ text }) => (
+export const ScreenReaderText: FC<Props> = ({ text }) => (
 	<Text>{text}</Text>
 );
 
