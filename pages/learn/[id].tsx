@@ -12,15 +12,7 @@ const LearnPage: NextPage = () => {
 
     const { car, error, isLoading } = useGetSingleCar(id);
     if (isLoading) return <Spinner size={32} />;
-    if (error)
-        return (
-            <AlertMessage
-                isVisible
-                message="Oh no, something went wrong and we cannot access the
-            information right now. Please try again later or try
-            reloading the page."
-            />
-        );
+    if (error) return <AlertMessage isVisible message={error.message} />;
 
     return (
         <>

@@ -21,9 +21,7 @@ const HomePage: NextPage = () => {
     if (isLoading) return <Spinner size={32} />;
     if (error)
         return (
-            <AlertMessage isVisible message="Oh no, something went wrong and we cannot access the
-            Electric Cars right now. Please try again later or try
-            reloading the page." />
+            <AlertMessage isVisible message={error.message} />
         );
 
     return (

@@ -14,12 +14,7 @@ const ShopPage: NextPage = () => {
     if (isLoading) return <Spinner size={32} />;
     if (error)
         return (
-            <AlertMessage
-                isVisible
-                message="Oh no, something went wrong and we cannot access the
-            information right now. Please try again later or try
-            reloading the page."
-            />
+            <AlertMessage isVisible message={error.message} />
         );
 
     return (

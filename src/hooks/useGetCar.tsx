@@ -4,13 +4,21 @@ import { Car } from "../models/car";
 interface CarsData {
     cars: Car[];
     isLoading: boolean;
-    error: {} | undefined;
+    error:
+        | {
+              message: string;
+          }
+        | undefined;
 }
 
 interface SingleCarData {
     car: Car;
     isLoading: boolean;
-    error: {} | undefined;
+    error:
+        | {
+              message: string;
+          }
+        | undefined;
 }
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
@@ -28,6 +36,11 @@ export const useGetSingleCar = (
         });
     }
 
+    if (error) {
+        error.message =
+            "Oh no, something went wrong and we cannot access the information right now. Please try again later or try reloading the page.";
+    }
+
     return {
         car: filteredCar,
         isLoading: !error && !data,
@@ -37,6 +50,11 @@ export const useGetSingleCar = (
 
 export const useGetCars = (): CarsData => {
     const { data, error } = useSWR(`/api/cars.json`, fetcher);
+
+    if (error) {
+        error.message =
+            "Oh no, something went wrong and we cannot access the information right now. Please try again later or try reloading the page.";
+    }
 
     return {
         cars: data,
