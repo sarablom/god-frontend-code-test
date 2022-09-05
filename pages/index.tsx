@@ -12,7 +12,7 @@ import { AlertMessage } from "../src/components/AlertMessage";
 
 const HomePage: NextPage = () => {
     const { cars, isLoading, error } = useGetCars();
-    const [filteredCars, setFilteredCars] = useState<Car[] | []>([]);
+    const [filteredCars, setFilteredCars] = useState<Car[]>([]);
 
     useEffect(() => {
         if (cars) setFilteredCars(cars);
