@@ -15,63 +15,63 @@ interface Props {
  * @param car - An object of type Car
  */
 
-export const ElectricCarCard: FC<Props> = ({ car }) => {
-    return (
-        <Card  className="carousel-item">
+export const ElectricCarCard: FC<Props> = ({
+    car: { bodyType, modelName, modelType, imageUrl, id },
+}) => (
+    <Card className="carousel-item">
+        <Text
+            variant="bates"
+            extend={({ theme }) => ({
+                fontSize: ".7rem",
+                color: theme.color.foreground.secondary,
+                fontWeight: "500",
+            })}
+        >
+            {bodyType.toUpperCase()}
+        </Text>
+        <Flex extend={{ flexDirection: "row" }} className="text-warp">
             <Text
-                variant="bates"
+                variant="amundsen"
+                extend={() => ({
+                    marginRight: "8px",
+                })}
+            >
+                {modelName}
+            </Text>
+
+            <Text
+                variant="columbus"
                 extend={({ theme }) => ({
-                    fontSize: ".7rem",
+                    fontSize: "1rem",
                     color: theme.color.foreground.secondary,
                     fontWeight: "500",
                 })}
             >
-                {car.bodyType.toUpperCase()}
+                {modelType}
             </Text>
-            <Flex extend={{ flexDirection: "row" }} className="text-warp">
-                <Text
-                    variant="amundsen"
-                    extend={() => ({
-                        marginRight: "8px",
-                    })}
-                >
-                    {car.modelName}
-                </Text>
+        </Flex>
 
-                <Text
-                    variant="columbus"
-                    extend={({ theme }) => ({
-                        fontSize: "1rem",
-                        color: theme.color.foreground.secondary,
-                        fontWeight: "500",
-                    })}
-                >
-                    {car.modelType}
-                </Text>
-            </Flex>
-
-            <Image
-                src={car.imageUrl}
-                alt={car.modelName}
-                width="100%"
-                height="80%"
-                layout="responsive"
-                objectFit="contain"
-                className="electric-car-image"
-            />
-            <Flex
-                className="flex-center"
-                extend={{
-                    flexDirection: "row",
-                    justityContent: "center",
-                }}
-            >
-                <LinkWithRightArrow name="Learn" path={`/learn/${car.id}`} />
-                <LinkWithRightArrow name="Shop" path={`/shop/${car.id}`} />
-            </Flex>
-        </Card>
-    );
-};
+        <Image
+            src={imageUrl}
+            alt={modelName}
+            width="100%"
+            height="80%"
+            layout="responsive"
+            objectFit="contain"
+            className="electric-car-image"
+        />
+        <Flex
+            className="flex-center"
+            extend={{
+                flexDirection: "row",
+                justityContent: "center",
+            }}
+        >
+            <LinkWithRightArrow name="Learn" path={`/learn/${id}`} />
+            <LinkWithRightArrow name="Shop" path={`/shop/${id}`} />
+        </Flex>
+    </Card>
+);
 
 const Card = styled.div`
     width: 350px;
