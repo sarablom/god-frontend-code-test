@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { ElectricCarCard } from "../src/components/ElectricCarCard";
-import { useGetCars } from "../src/hooks/useGetCar";
+import { useGetEntities } from "../src/hooks/useGetCar";
 import { Spinner, Text } from "vcc-ui";
 import styled from "styled-components";
 import { FilterSearchBar } from "../src/components/FIlterSearchBar";
@@ -11,7 +11,11 @@ import { Car } from "../src/models/car";
 import { AlertMessage } from "../src/components/AlertMessage";
 
 const HomePage: NextPage = () => {
-    const { cars, isLoading, error } = useGetCars();
+    const {
+        dataEntities: cars,
+        isLoading,
+        error,
+    } = useGetEntities<Car>("/api/cars.json");
     const [filteredCars, setFilteredCars] = useState<Car[]>([]);
 
     useEffect(() => {
@@ -19,10 +23,7 @@ const HomePage: NextPage = () => {
     }, [cars]);
 
     if (isLoading) return <Spinner size={32} />;
-    if (error)
-        return (
-            <AlertMessage isVisible message={error.message} />
-        );
+    if (error) return <AlertMessage isVisible message={error.message} />;
 
     return (
         <PageWrapper>

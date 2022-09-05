@@ -1,37 +1,41 @@
 import useSWR from "swr";
-import { Car } from "../models/car";
 
-interface CarsData {
-    cars: Car[];
+interface DataEntityResponse<T> {
+    dataEntity?: DataPayload<T>;
     isLoading: boolean;
-    error: {
+    error:
+        | {
               message: string;
           }
         | undefined;
 }
 
-interface SingleCarData {
-    car: Car;
+interface DataEntitiesResponse<T> {
+    dataEntities: T[];
     isLoading: boolean;
-    error: {
+    error:
+        | {
               message: string;
           }
         | undefined;
+}
+
+interface DataPayload<T> {
+    [key: string]: T;
 }
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-export const useGetSingleCar = (
-    id: string | string[] | undefined
-): SingleCarData => {
-    const { data, error } = useSWR(`/api/cars.json`, fetcher);
+export const useGetSingleEntityById = <T,>(
+    id: string | string[] | undefined,
+    url: string
+): DataEntityResponse<T> => {
+    const { data, error } = useSWR<DataPayload<T>[]>(url, fetcher);
 
-    let filteredCar;
+    let entity;
 
     if (data) {
-        filteredCar = data.find((car: Car) => {
-            return car.id === id;
-        });
+        entity = data.find(item => item.id === id);
     }
 
     if (error) {
@@ -40,14 +44,14 @@ export const useGetSingleCar = (
     }
 
     return {
-        car: filteredCar,
+        dataEntity: entity,
         isLoading: !error && !data,
         error,
     };
 };
 
-export const useGetCars = (): CarsData => {
-    const { data, error } = useSWR(`/api/cars.json`, fetcher);
+export const useGetEntities = <T,>(url: string): DataEntitiesResponse<T> => {
+    const { data, error } = useSWR<T[]>(url, fetcher);
 
     if (error) {
         error.message =
@@ -55,7 +59,7 @@ export const useGetCars = (): CarsData => {
     }
 
     return {
-        cars: data,
+        dataEntities: data ? data : [],
         isLoading: !error && !data,
         error,
     };
