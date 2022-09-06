@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { ElectricCarCard } from "../src/components/ElectricCarCard";
-import { useGetEntities } from "../src/hooks/useGetEntities";
+import { useGetEntities } from "../src/hooks/useApiRequest";
 import { Spinner, Text } from "vcc-ui";
 import styled from "styled-components";
 import { FilterSearchBar } from "../src/components/FIlterSearchBar";
