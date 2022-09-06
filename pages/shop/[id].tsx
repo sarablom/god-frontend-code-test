@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { Button, Spinner } from "vcc-ui";
 import Link from "next/link";
-import { useGetSingleEntityById } from "../../src/hooks/useGetCar";
+import { useGetSingleEntityById } from "../../src/hooks/useGetEntities";
 import { AlertMessage } from "../../src/components/AlertMessage";
 import { Car } from "../../src/models/car";
 
